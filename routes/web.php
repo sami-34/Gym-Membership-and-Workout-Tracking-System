@@ -1,14 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+// Route::get('/', function () {
+//     return redirect('/login');
+// });
+
+use App\Http\Controllers\LandingController;
+
+Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+
+
 use App\Http\Controllers\AuthController;
-
-Route::get('/', function () {
-    return redirect('/login');
-});
-
-
-
 
 // Authentication Routes
 Route::controller(AuthController::class)->group(function() {

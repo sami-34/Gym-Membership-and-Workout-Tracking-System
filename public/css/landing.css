@@ -1,0 +1,108 @@
+.landing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    padding: 1rem 2rem;
+}
+.landing-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+.landing-header .links a {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    background: #333;
+    color: #ddd;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.hero {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: linear-gradient(to right, #111, #333);
+}
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+.hero p {
+    font-size: 1.2rem;
+    color: #ccc;
+    max-width: 600px;
+    margin: auto;
+}
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+.feature {
+    background: #222;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.feature h3 {
+    margin-top: 0;
+}
+.site-footer {
+    background: #111;
+    color: #bbb;
+    padding: 2rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 1.5rem;
+}
+
+.footer-section h4 {
+    margin-bottom: 0.75rem;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: #fff;
+}
+
+hr {
+    border-color: #444;
+    margin: 1rem auto;
+    width: 90%;
+}
+
+.copyright {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #888;
+}
