@@ -22,28 +22,8 @@
       </button>
     </form>
   </header>
-
-  {{-- <nav class="sidebar">
-    <ul>
-      @if(auth()->user()->role=='admin')
-        <li><a href="{{ url('/memberships') }}">Memberships</a></li>
-        <li><a href="{{ url('/payments') }}">Payments</a></li>
-        <li><a href="{{ url('/admin/reports') }}">Reports</a></li>
-      @elseif(auth()->user()->role=='trainer')
-        <li><a href="{{ url('/trainer/profile') }}">My Profile</a></li>
-        <li><a href="{{ url('/workouts') }}">Workouts</a></li>
-        <li><a href="{{ url('/diets') }}">Diet Plans</a></li>
-        <li><a href="{{ url('/assign-workout') }}">Assign Workout</a></li>
-        <li><a href="{{ url('/assign-diet') }}">Assign Diet</a></li>
-      @else
-        <li><a href="{{ url('/attendance/checkin') }}">Check-In</a></li>
-        <li><a href="{{ url('/progress') }}">My Progress</a></li>
-        <li><a href="{{ url('/trainers') }}">Choose Trainer</a></li>
-      @endif
-    </ul>
-  </nav> --}}
-
-    <nav class="sidebar" style="display:none">
+    <nav class="sidebar hidden">
+      <button class="close-btn" onclick="toggleMenu()">✖</button>
       <ul>
         {{-- DASHBOARD (one link only) --}}
         <li><a href="/dashboard">Dashboard</a></li>
@@ -51,9 +31,9 @@
         {{-- ROLE-SPECIFIC NAVIGATION --}}
         @if(auth()->user()->role == 'admin')
           <li><a href="/admin/attendance">Attendance Report</a></li>
-          <li><a href="/memberships">Memberships</a></li>
-          <li><a href="/payments">Payments</a></li>
+          <li><a href="/memberships">Manage Memberships</a></li>
           <li><a href="/admin/manageTrainers">Manage Trainers</a></li>
+          <li><a href="/payments">Payments</a></li>
           <li><a href="/admin/reports">Reports</a></li>
 
         @elseif(auth()->user()->role == 'trainer')
@@ -81,8 +61,8 @@
   </main>
   <script>
     function toggleMenu() {
-      document.querySelector('.sidebar').style.display =
-        document.querySelector('.sidebar').style.display==='block'?'none':'block';
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('hidden');
     }
   </script>
 </body>

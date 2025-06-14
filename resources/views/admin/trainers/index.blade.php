@@ -20,12 +20,10 @@
         <td>Rs.{{ $t->trainerProfile->price_per_month }}</td>
         <td>{{ $t->trainerProfile->rating }}</td>
         <td>
-          <a href="/admin/manageTrainers/{{ $t->id }}/edit">Edit</a>
-          <form action="/admin/manageTrainers/{{ $t->id }}" method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
+          <a href="/admin/manageTrainers/{{ $t->id }}/edit">Edit</a> | 
+          <a href="/admin/manageTrainers/{{ $t->id }}/delete">
             <button onclick="return confirm('Are you sure?')" style="color:red;">Delete</button>
-          </form>
+          </a>
         </td>
       </tr>
     @endforeach

@@ -52,12 +52,11 @@ class AdminController extends Controller
     public function deleteTrainer($id) {
         $trainer = User::where('role', 'trainer')->findOrFail($id);
 
-        // Optional: remove their trainerProfile as well
-        $trainer->trainerProfile()->delete();
-
-        // Nullify any members who selected this trainer
+        // Detach members who selected this trainer
         User::where('trainer_id', $trainer->id)->update(['trainer_id' => null]);
 
+        // Delete profile and trainer
+        $trainer->trainerProfile?->delete();
         $trainer->delete();
 
         return redirect('/admin/manageTrainers')->with('success', 'Trainer deleted successfully.');
