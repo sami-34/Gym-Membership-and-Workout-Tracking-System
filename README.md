@@ -16,6 +16,7 @@ A Laravel-based web application to manage gym members, trainers, workouts, diet 
 
 ## 📁 Project Structure
 
+```
 ├── app/
 │ ├── Http/Controllers/ → All app logic
 │ ├── Models/ → User, Membership, Payment, etc.
@@ -31,6 +32,7 @@ A Laravel-based web application to manage gym members, trainers, workouts, diet 
 ├── database/migrations/ → Database schema
 ├── public/ → CSS, assets
 ├── README.md → This file
+```
 
 ---
 
@@ -71,7 +73,9 @@ cd gym-tracker
 
 ### 2. Install dependencies
 
+```
 composer install
+```
 
 ---
 
@@ -89,21 +93,27 @@ CACHE_DRIVER=file
 
 ### 4. Generate app key
 
+```
 php artisan key:generate
+```
 
 ---
 
 ### 5. Run migrations and seeders
 
+```
 php artisan migrate --seed
+```
 
 ---
 
 ### 6. Start the server
 
+```
 php artisan serve
+```
 
-visit: http://localhost:8000
+Visit: http://localhost:8000
 
 ---
 
@@ -115,19 +125,19 @@ You can register users from the registration page or use seeded users (if added)
 
 ### 📦 Features
 
-Role-based login (Admin, Trainer, Member)
+-   Role-based login (Admin, Trainer, Member)
 
-Membership management
+-   Membership management
 
-Attendance and progress logging
+-   Attendance and progress logging
 
-Workout & diet plan assignment
+-   Workout & diet plan assignment
 
-Trainer selection and rating
+-   Trainer selection and rating
 
-Admin dashboards with statistics and graphs
+-   Admin dashboards with statistics and graphs
 
-PDF export for advanced reports
+-   PDF export for advanced reports
 
 ---
 
