@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'trainer', 'member'])->default('member');
+            $table->unsignedBigInteger('trainer_id')->nullable();
+            $table->foreign('trainer_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

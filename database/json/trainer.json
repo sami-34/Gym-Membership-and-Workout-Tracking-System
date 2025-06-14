@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Sameer Trainer",
+        "email": "sameer123@gmail.com",
+        "password": "123456789",
+        "role": "trainer"
+    },
+    {
+        "name": "Yuri Trainer",
+        "email": "yuri@trainer.com",
+        "password": "trainer123",
+        "role": "trainer"
+    },
+    {
+        "name": "Kriti Trainer",
+        "email": "kriti@trainer.com",
+        "password": "trainer123",
+        "role": "trainer"
+    },
+    {
+        "name": "Ronnie Coleman",
+        "email": "ron@trainer.com",
+        "password": "trainer123",
+        "role": "trainer"
+    }
+]

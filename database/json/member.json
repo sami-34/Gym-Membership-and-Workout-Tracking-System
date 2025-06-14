@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Sameer Member",
+        "email": "sameer@gmail.com",
+        "password": "123456789",
+        "role": "member"
+    },
+    {
+        "name": "Sabin Member",
+        "email": "sabin@member.com",
+        "password": "member123",
+        "role": "member"
+    },
+    {
+        "name": "Prajwal Member",
+        "email": "prajwal@member.com",
+        "password": "member123",
+        "role": "member"
+    },
+    {
+        "name": "Rijan Member",
+        "email": "rijan@member.com",
+        "password": "member123",
+        "role": "member"
+    }
+]
