@@ -11,10 +11,6 @@ class MemberDietController extends Controller
 {
     public function create()
     {
-        // $members = User::where('role', 'member')->get();
-        // $diets = DietPlan::where('trainer_id', auth()->id())->get();
-
-        // return view('trainer.assign-diet', compact('members', 'diets'));
 
         // MemberWorkoutController@create
         $members = User::where('role','member')->where('trainer_id',auth()->id())->get();

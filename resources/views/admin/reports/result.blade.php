@@ -7,6 +7,14 @@
   <p><strong>Date Range:</strong> {{ $request->start_date }} to {{ $request->end_date }}</p>
 
   <hr>
+
+  @if($request->membership_type)
+    <p><strong>Membership Plan:</strong> {{ $request->membership_type }}</p>
+  @else
+    <p><strong>Membership Plan:</strong> All</p>
+  @endif
+
+  <hr>
   <h3>Key Data</h3>
   <ul>
     <li>Total Active Members: {{ $activeMembers }}</li>

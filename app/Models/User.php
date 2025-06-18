@@ -68,12 +68,12 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
     
-    // NEW: member → trainer relationship
+    //  member → trainer relationship
     public function trainer() {
         return $this->belongsTo(User::class, 'trainer_id');
     }
 
-    // NEW: trainer → members relationship
+    // trainer → members relationship
     public function members() {
         return $this->hasMany(User::class, 'trainer_id');
     }

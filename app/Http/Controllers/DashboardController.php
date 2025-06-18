@@ -15,19 +15,19 @@ class DashboardController extends Controller
     {
         $userId = auth()->id();
 
-        // REMOVE ↓↓↓
+        
         $att = Attendance::where('user_id', $userId)
                 ->selectRaw('date, 1 as present')->get();
         $attLabels = $att->pluck('date');
         $attData   = $att->pluck('present');
 
-        // UPDATE ↓↓↓
+        
         $attCount = Attendance::where('user_id', $userId)->count();
         $totalDays = now()->day;
 
         $trainer = User::find(auth()->user()->trainer_id);
 
-        // UPDATE ↓↓↓
+        
         return view('dashboards.member', compact('attCount', 'totalDays', 'trainer'));
     }
 
@@ -51,7 +51,6 @@ class DashboardController extends Controller
         $newThisMonth   = User::whereMonth('created_at', now()->month)->count();
         $recentPayments = Payment::with('user')->orderBy('payment_date', 'desc')->limit(5)->get();
 
-        // build monthLabels & monthData
         $monthLabels = [];
         $monthData   = [];
         foreach (['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] as $i => $m) {

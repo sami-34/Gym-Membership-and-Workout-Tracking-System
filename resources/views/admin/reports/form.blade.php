@@ -17,8 +17,15 @@
     <label>End Date:</label>
     <input type="date" name="end_date" required><br><br>
 
+    {{-- <label>Membership Type (optional):</label>
+    <input type="text" name="membership_type"><br><br> --}}
     <label>Membership Type (optional):</label>
-    <input type="text" name="membership_type"><br><br>
+    <select name="membership_type">
+      <option value="">All</option>
+      @foreach($planNames as $plan)
+        <option value="{{ $plan }}">{{ $plan }}</option>
+      @endforeach
+    </select><br><br>
 
     <label>Payment Status (optional):</label>
     <select name="payment_status">

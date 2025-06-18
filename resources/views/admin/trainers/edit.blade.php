@@ -4,7 +4,7 @@
     <h2>Edit Trainer: {{ $trainer->name }}</h2>
     <form method="POST" action="/admin/manageTrainers/{{ $trainer->id }}}}">
     @csrf
-    @method('PUT') {{-- This simulates a PUT request via POST --}}
+    @method('PUT')
     
     <label>Price per Month</label>
     <input type="number" name="price_per_month" value="{{ $trainer->trainerProfile->price_per_month }}" required>

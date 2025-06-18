@@ -24,7 +24,7 @@ class TrainerViewController extends Controller
             }
         }
 
-        // Pass both to the view
+        
         return view('member.trainers.index', [
             'trainers' => $trainers,
             'current' => $currentTrainer,

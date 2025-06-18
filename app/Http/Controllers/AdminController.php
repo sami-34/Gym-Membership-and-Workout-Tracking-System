@@ -63,7 +63,11 @@ class AdminController extends Controller
     }
 
     public function reportForm() {
-        return view('admin.reports.form');
+        $planNames = Membership::select('plan_name')->distinct()->pluck('plan_name');
+        if ($planNames->isEmpty()) {
+            $planNames = collect(['Monthly Plan', 'Yearly Plan', '6-Month Plan']);
+        }
+        return view('admin.reports.form', compact('planNames'));
     }
 
     public function generateReport(Request $request) {
@@ -77,7 +81,7 @@ class AdminController extends Controller
         ]);
 
         $activeMembers = Membership::whereBetween('start_date', [$request->start_date, $request->end_date])
-            ->when($request->membership_type, fn($q) => $q->where('type', $request->membership_type))
+            ->when($request->membership_type, fn($q) => $q->where('plan_name', $request->membership_type))
             ->count();
 
         $revenue = Payment::whereBetween('payment_date', [$request->start_date, $request->end_date])
@@ -99,7 +103,7 @@ class AdminController extends Controller
     public function exportPDF(Request $request)
     {
         $activeMembers = Membership::whereBetween('start_date', [$request->start_date, $request->end_date])
-            ->when($request->membership_type, fn($q) => $q->where('type', $request->membership_type))
+            ->when($request->membership_type, fn($q) => $q->where('plan_name', $request->membership_type))
             ->count();
 
         $revenue = Payment::whereBetween('payment_date', [$request->start_date, $request->end_date])

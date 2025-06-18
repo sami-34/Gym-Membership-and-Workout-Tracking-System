@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             ]
             );
 
-            // Clear unique faker cache to be safe
+            // Clear unique faker cache
             fake()->unique(true);
         
         //Trainer

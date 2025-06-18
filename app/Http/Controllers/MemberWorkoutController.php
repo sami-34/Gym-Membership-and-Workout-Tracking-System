@@ -11,10 +11,6 @@ class MemberWorkoutController extends Controller
 {
     public function create()
     {
-        // $members = User::where('role', 'member')->get();
-        // $workouts = Workout::where('trainer_id', auth()->id())->get();
-
-        // return view('trainer.assign-workout', compact('members', 'workouts'));
         
         // MemberWorkoutController@create
         $members = User::where('role','member')->where('trainer_id',auth()->id())->get();
