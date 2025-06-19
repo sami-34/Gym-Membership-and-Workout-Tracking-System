@@ -9,12 +9,40 @@ use App\Models\ProgressReport;
 class ProgressReportController extends Controller
 {
     public function index() {
-        $progress = ProgressReport::where('user_id', auth()->id())->get();
+    $raw = ProgressReport::where('user_id', auth()->id())->get()->toArray();
+
+        // Apply QuickSort by 'muscle_mass' field
+        $sorted = $this->quicksort($raw);
+
         $latest = ProgressReport::where('user_id', auth()->id())
-            ->orderBy('recorded_date', 'desc')
+            ->orderBy('recorded_date', 'asc')
             ->first();
-        return view('member.progress.index', compact('progress', 'latest'));
+
+        return view('member.progress.index', [
+            'progress' => $sorted,
+            'latest' => $latest
+        ]);
     }
+
+    /* 
+        *ALGORITHM USED: QuickSort on muscle data to find the and sort it by the highest in ascending. 
+    */
+    private function quicksort($array) {
+        if (count($array) < 2) return $array;
+
+        $pivot = $array[0];
+        $left = $right = [];
+
+        for ($i = 1; $i < count($array); $i++) {
+            if ($array[$i]['muscle_mass'] < $pivot['muscle_mass']) {
+                $right[] = $array[$i]; 
+            } else {
+                $left[] = $array[$i];
+            }
+        }
+        return array_merge($this->quicksort($left), [$pivot], $this->quicksort($right));
+    }
+
 
     public function store(Request $request) {
         ProgressReport::create([

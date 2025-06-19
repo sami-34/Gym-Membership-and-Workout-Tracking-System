@@ -70,6 +70,23 @@ class AdminController extends Controller
         return view('admin.reports.form', compact('planNames'));
     }
 
+    /*
+        *ALGORITHM USED: Custom sorting algorithm (Bubble Sort) to simulates a comparison-based sorting algorithm like Bubble Sort or Merge Sort.  
+    */
+    private function bubbleSortTrainers(array $trainers){
+        for ($i = 0; $i < count($trainers) - 1; $i++) {
+            for ($j = 0; $j < count($trainers) - $i - 1; $j++) {
+                if ($trainers[$j]['members_count'] < $trainers[$j + 1]['members_count']) {
+                    $temp = $trainers[$j];
+                    $trainers[$j] = $trainers[$j + 1];
+                    $trainers[$j + 1] = $temp;
+                }
+            }
+        }
+
+        return $trainers;
+    }
+
     public function generateReport(Request $request) {
         $request->validate([
             'report_type' => 'required',
@@ -92,13 +109,20 @@ class AdminController extends Controller
         $trainerPerformance = [];
 
         if ($request->trainer_performance == 'on') {
-            $trainerPerformance = User::where('role', 'trainer')->withCount('members')->get();
+            $allTrainers = User::where('role', 'trainer')->withCount('members')->get()->toArray();
+
+            // - Custom Sorting Algorithm:
+            $allTrainers = $this->bubbleSortTrainers($allTrainers);
+
+            $trainerPerformance = collect($allTrainers); // Convert back to collection
         }
 
         return view('admin.reports.result', compact(
             'activeMembers', 'revenue', 'growth', 'trainerPerformance', 'request'
         ));
     }
+
+    
 
     public function exportPDF(Request $request)
     {
@@ -114,8 +138,14 @@ class AdminController extends Controller
         $trainerPerformance = [];
 
         if ($request->trainer_performance == 'on') {
-            $trainerPerformance = User::where('role', 'trainer')->withCount('members')->get();
+            $allTrainers = User::where('role', 'trainer')->withCount('members')->get()->toArray();
+
+            // - Custom Sorting Algorithm:
+            $allTrainers = $this->bubbleSortTrainers($allTrainers);
+
+            $trainerPerformance = collect($allTrainers); // Convert back to collection
         }
+
 
         $pdf = Pdf::loadView('admin.reports.pdf', [
             'activeMembers' => $activeMembers,

@@ -10,42 +10,46 @@
     <button type="submit">Log Progress</button>
   </form>
 
+  <h2>Your Progress Report (Sorted by Muscle %)</h2>
   <table>
     <tr><th>Date</th><th>Weight</th><th>Body Fat</th><th>Muscle</th></tr>
     @foreach($progress as $p)
       <tr>
-        <td>{{ $p->recorded_date }}</td>
-        <td>{{ $p->weight }}</td>
-        <td>{{ $p->body_fat_percentage }}</td>
-        <td>{{ $p->muscle_mass }}</td>
+        <td>{{ $p['recorded_date'] }}</td>
+        <td>{{ $p['weight'] }}</td>
+        <td>{{ $p['body_fat_percentage'] }}</td>
+        <td>{{ $p['muscle_mass'] }}</td>
       </tr>
     @endforeach
   </table>
-  @if($latest)
-  <div class="card">
-    <h3>Latest Body Composition</h3>
-    <canvas id="compChart"></canvas>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const ctx2 = document.getElementById('compChart').getContext('2d');
-    new Chart(ctx2, {
-      type: 'pie',
-      data: {
-        labels: ['Weight','Body Fat','Muscle'],
-        datasets: [{
-          data: [
-            {{ $latest->weight }},
-            {{ $latest->body_fat_percentage }},
-            {{ $latest->muscle_mass }}
-          ],
-          backgroundColor: ['#666','#444','#888']
-        }]
-      }
-    });
-  </script>
-@else
-  <p>No progress data available yet.</p>
-@endif
+  @if($latest)
+    <div class="card">
+      <h3>Body Composition</h3>
+      <div style="max-width: 400px; margin: auto;">
+        <canvas id="compChart" width="300" height="300"></canvas>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx2 = document.getElementById('compChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: ['Weight','Body Fat','Muscle'],
+          datasets: [{
+            data: [
+              {{ $latest->weight }},
+              {{ $latest->body_fat_percentage }},
+              {{ $latest->muscle_mass }}
+            ],
+            backgroundColor: ['#666','#444','#888']
+          }]
+        }
+      });
+    </script>
+  @else
+    <p>No progress data available yet.</p>
+  @endif
 @endsection

@@ -29,8 +29,8 @@
       <tr><th>Name</th><th>Members</th></tr>
       @foreach($trainerPerformance as $trainer)
         <tr>
-          <td>{{ $trainer->name }}</td>
-          <td>{{ $trainer->members_count }}</td>
+          <td>{{ $trainer['name'] }}</td>
+          <td>{{ $trainer['members_count'] }}</td>
         </tr>
       @endforeach
     </table>

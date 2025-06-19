@@ -4,7 +4,6 @@
   <h2>Generate Report</h2>
   <form method="POST" action="/admin/reports">
     @csrf
-
     <label>Report Type:</label>
     <select name="report_type" required>
       <option value="summary">Summary</option>
@@ -17,9 +16,7 @@
     <label>End Date:</label>
     <input type="date" name="end_date" required><br><br>
 
-    {{-- <label>Membership Type (optional):</label>
-    <input type="text" name="membership_type"><br><br> --}}
-    <label>Membership Type (optional):</label>
+    <label>Plan Name (optional):</label>
     <select name="membership_type">
       <option value="">All</option>
       @foreach($planNames as $plan)

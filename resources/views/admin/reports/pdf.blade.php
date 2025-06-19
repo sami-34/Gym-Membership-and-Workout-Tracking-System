@@ -14,7 +14,15 @@
   <h2>Gym Report Summary</h2>
   <p><strong>Report Type:</strong> {{ $request->report_type }}</p>
   <p><strong>Date Range:</strong> {{ $request->start_date }} to {{ $request->end_date }}</p>
+  <hr>
 
+  @if($request->membership_type)
+    <p><strong>Membership Plan:</strong> {{ $request->membership_type }}</p>
+  @else
+    <p><strong>Membership Plan:</strong> All</p>
+  @endif
+
+  
   <hr>
   <h3>Key Data</h3>
   <ul>
@@ -29,8 +37,8 @@
       <tr><th>Name</th><th>Members</th></tr>
       @foreach($trainerPerformance as $trainer)
         <tr>
-          <td>{{ $trainer->name }}</td>
-          <td>{{ $trainer->members_count }}</td>
+          <td>{{ $trainer['name'] }}</td>
+          <td>{{ $trainer['members_count'] }}</td>
         </tr>
       @endforeach
     </table>

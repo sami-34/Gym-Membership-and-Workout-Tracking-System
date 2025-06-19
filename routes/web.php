@@ -70,13 +70,12 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+
 use App\Http\Controllers\TrainerProfileController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/trainer/profile', [TrainerProfileController::class, 'edit'])->name('trainer.profile.edit');
     Route::post('/trainer/profile', [TrainerProfileController::class, 'update'])->name('trainer.profile.update');
-    //  Route::post('/trainers/select', [TrainerProfileController::class, 'selectTrainer'])->name('trainer.select');
-    // Route::post('/trainers/rate', [TrainerProfileController::class, 'rateTrainer'])->name('trainer.rate');
 });
 
 

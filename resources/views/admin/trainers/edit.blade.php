@@ -8,7 +8,7 @@
     
     <label>Price per Month</label>
     <input type="number" name="price_per_month" value="{{ $trainer->trainerProfile->price_per_month }}" required>
-
+    
     <label>Rating</label>
     <input type="number" step="0.1" max="5" name="rating" value="{{ $trainer->trainerProfile->rating }}">
 
