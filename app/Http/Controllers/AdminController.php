@@ -83,7 +83,6 @@ class AdminController extends Controller
                 }
             }
         }
-
         return $trainers;
     }
 
