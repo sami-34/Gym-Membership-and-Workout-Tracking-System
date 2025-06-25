@@ -12,7 +12,6 @@
     <select name="role" required>
       <option value="member">Member</option>
       <option value="trainer">Trainer</option>
-      <option value="admin">Admin</option>
     </select>
     <br>
     <button type="submit">Register</button>
