@@ -39,10 +39,57 @@ class TrainerViewController extends Controller
     }
 
 
+    public function recommended()
+    {
+        $trainers = User::where('role', 'trainer')->with('trainerProfile', 'members')->get();
+
+        // Calculate recommendation score
+        $scored = $this->recomScore($trainers);
+
+        $currentTrainer = null;
+        if (auth()->check() && auth()->user()->trainer_id) {
+            $currentTrainer = User::with('trainerProfile')->find(auth()->user()->trainer_id);
+        }
+
+        return view('member.trainers.recommended', compact('scored','currentTrainer'));
+    }
+
+    /*
+        Custom algo to calculate recommendation score: (rating * member_count) / price
+    */
+    public function recomScore($trainers)
+    {
+        return $trainers->map(function ($trainer) {
+            $rating = $trainer->trainerProfile->rating ?? 0;
+            $price = $trainer->trainerProfile->price_per_month ?? 1;
+            $memberCount = $trainer->members->count();
+
+            $ratingWeight = 130;
+            $memberWeight = 170;
+
+            $score = ($rating * $ratingWeight + $memberCount * $memberWeight) / max($price, 1);
+            // $score = ($rating * ($memberCount + 1)) / max($price, 1);
+
+            return [
+                'trainer' => $trainer,
+                'score' => round($score, 4),
+            ];
+        })->sortByDesc('score')
+            ->values()  // Reset keys
+            ->take(3); ; // LIMIT TO TOP 3
+    }
+
+
     public function selectTrainer(Request $r) 
     {
         auth()->user()->update(['trainer_id'=>$r->trainer_id]);
         return back()->with('success','Trainer selected!');
+    }
+
+    public function unselectTrainer()
+    {
+        auth()->user()->update(['trainer_id' => null]);
+        return back()->with('success', 'Trainer removed successfully.');
     }
 
 

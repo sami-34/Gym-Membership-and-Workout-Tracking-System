@@ -79,7 +79,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/trainers/select', [TrainerViewController::class, 'selectTrainer']);
     Route::post('/trainers/rate', [TrainerViewController::class, 'rateTrainer']);
     Route::get('/myplan', [TrainerViewController::class, 'myPlan']);
-
+    Route::get('/trainers/recommended', [TrainerViewController::class,'recommended']);
+    Route::post('/trainers/unselect', [TrainerViewController::class, 'unselectTrainer']);
 });
 
 

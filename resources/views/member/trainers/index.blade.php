@@ -20,14 +20,21 @@
         <div class="trainer-card">
           <h3>{{ $t->name }}</h3>
           <p>{{ $t->trainerProfile->description ?? 'No description.' }}</p>
-          <p>Rating: {{ number_format($t->trainerProfile->rating, 2) }}</p>
-          <p>Price: Rs.{{ $t->trainerProfile->price_per_month }}</p>
+          <p>Rating: {{ number_format($t->trainerProfile->rating, 2) }} ⭐</p>
+          <p>Price Per Month: Rs.{{ $t->trainerProfile->price_per_month }}</p>
+          @if(isset($t->score))
+            <p><strong>Score:</strong> <span class="score">{{ number_format($t->score, 2) }}</span></p>
+          @endif
 
-          <form method="POST" action="/trainers/select">
-            @csrf
-            <input type="hidden" name="trainer_id" value="{{ $t->id }}">
-            <button>Select</button>
-          </form>
+          @if($current && $current->id == $t->id)
+            <p class="current-badge">✔️ Selected Trainer</p>
+          @else
+            <form method="POST" action="/trainers/select">
+              @csrf
+              <input type="hidden" name="trainer_id" value="{{ $t->id }}">
+              <button class="select-btn">Select</button>
+            </form>
+          @endif
         </div>
       @endforeach
     </div>
@@ -48,5 +55,10 @@
       </select>
       <button>Submit Rating</button>
     </form>
+    <form method="POST" action="/trainers/unselect">
+      @csrf
+      <button type="submit" style="margin-top: 0.5rem; background: darkred; color: white;">Remove Trainer</button>
+    </form>
+
   @endif
 @endsection

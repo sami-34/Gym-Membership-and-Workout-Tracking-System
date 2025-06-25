@@ -10,11 +10,11 @@
     </div>
 
     <div class="card">
-      <h3>Your Trainer</h3>
+      <h3>Your Current Selected Trainer</h3>
       @if($trainer)
         <p>{{ $trainer->name }}</p>
-        <p>Price: Rs. {{ $trainer->trainerProfile->price_per_month ?? 'N/A' }}</p>
-        <p>Rating: {{ $trainer->trainerProfile->rating ?? 'N/A' }}</p>
+        <p>Price Per Month: Rs. {{ $trainer->trainerProfile->price_per_month ?? 'N/A' }}</p>
+        <p>Rating: {{ $trainer->trainerProfile->rating ?? 'N/A' }} ⭐</p>
       @else
         <p><a href="/trainers">Choose a Trainer</a></p>
       @endif

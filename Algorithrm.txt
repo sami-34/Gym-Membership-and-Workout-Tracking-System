@@ -1,0 +1,67 @@
+Algorithrm
+
+1. Trainer Recommendation Algorithm
+ What Is the Trainer Recommendation Algorithm?
+It’s a custom scoring algorithm that evaluates all available trainers based on:
+
+Their rating (quality),
+
+Their price (affordability),
+
+And how many members have selected them (popularity/performance).
+
+This is then used to compute a “score” for each trainer using a weighted formula.
+
+💡 The Formula
+php
+Copy
+Edit
+score = (rating × (members_count + 1)) / price
+🔍 Why this formula?
+Rating indicates quality — higher is better.
+
+Members count shows trust and popularity — we reward trainers who are chosen more.
+
+Price is a cost — lower is better, so we divide by price to penalize expensive trainers.
+
++1 is to avoid multiplication by 0 when no member has chosen that trainer yet.
+
+max(price, 1) is used to prevent division by zero (price can never be 0).
+
+This way, the higher the score, the more valuable the trainer is for the user.
+
+✅ Why It Is a Real Algorithm
+It’s not a built-in Laravel feature.
+
+It uses custom logic, numeric weightings, and ranking, which are core parts of algorithm design.
+
+It solves a real-world decision-making problem: "Which trainer should I choose?"
+
+It optimizes user experience by filtering and ranking the best options.
+
+⚙️ How It Works in the Project
+You get all trainers and calculate their score using the algorithm.
+
+You sort them in descending order of score.
+
+You pick the top 3 and show them to the user.
+
+The user can then view and choose the best trainer based on intelligent recommendation.
+
+📈 Benefits of This Algorithm
+Improves decision-making for members.
+
+Personalizes the gym experience.
+
+Adds a logical, data-driven feature that simulates smart behavior.
+
+Justifies algorithm use without being artificial or unnecessary.
+
+Scalable — more parameters can be added later (like years of experience, specialization, availability, etc.).
+
+🗣️ Summary Statement (You Can Say This in Your Report or Viva)
+“To help members select the most suitable trainer, I implemented a custom scoring algorithm that recommends trainers based on their rating, popularity, and price. This ensures fair, optimized recommendations, enhancing both usability and fairness in selection. The logic involves weighted scoring and sorting — making it a meaningful algorithm integrated with actual user behavior.”
+
+
+
+

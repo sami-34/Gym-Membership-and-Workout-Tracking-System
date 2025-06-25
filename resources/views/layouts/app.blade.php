@@ -47,6 +47,7 @@
           <li><a href="/attendance/checkin">Check‑In</a></li>
           <li><a href="/progress">My Progress</a></li>
           <li><a href="/trainers">Choose Trainer</a></li>
+          <li><a href="/trainers/recommended">Recommended Trainer</a></li>
           <li><a href="/myplan">My Plans</a></li>
         @endif
       </ul>
