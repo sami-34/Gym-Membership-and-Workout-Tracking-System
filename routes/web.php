@@ -83,6 +83,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/trainers/unselect', [TrainerViewController::class, 'unselectTrainer']);
     Route::post('/myplan/addplan', [TrainerViewController::class, 'addManualPlan']);
     Route::post('/myplan/autogenerate', [TrainerViewController::class, 'autoGeneratePlan']);
+    Route::post('/myplan/mark-done/workout', [TrainerViewController::class, 'markWorkoutDone']);
+Route::post('/myplan/mark-done/diet', [TrainerViewController::class, 'markDietDone']);
 });
 
 

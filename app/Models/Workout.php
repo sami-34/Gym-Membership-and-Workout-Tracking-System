@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Workout extends Model
 {
-    protected $fillable = ['trainer_id', 'name', 'description', 'difficulty_level'];
+    protected $fillable = ['trainer_id', 'name', 'description', 'difficulty_level', 'reps', 'sets'];
 
     public function trainer() {
         return $this->belongsTo(User::class, 'trainer_id');

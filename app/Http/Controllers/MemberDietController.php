@@ -24,14 +24,21 @@ class MemberDietController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'diet_plan_id' => 'required|exists:diet_plans,id',
+            'day_of_week' => 'required|integer|between:1,7',
             'notes' => 'nullable|string|max:500'
         ]);
 
-        MemberDiet::create([
-            'user_id' => $request->user_id,
-            'diet_plan_id' => $request->diet_plan_id,
-            'notes' => $request->notes
-        ]);
+         MemberDiet::updateOrCreate(
+            [
+                'user_id' => $request->user_id, 
+                'day_of_week' => $request->day_of_week
+            ],
+            [
+                'diet_plan_id' => $request->diet_plan_id, 
+                'notes' => $request->notes,
+                'assigned_by'=> auth()->id()
+            ]
+        );
 
         return redirect('/assign-diet')->with('success', 'Diet assigned successfully!');
     }

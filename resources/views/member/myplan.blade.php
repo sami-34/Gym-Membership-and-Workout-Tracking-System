@@ -1,23 +1,7 @@
 @extends('layouts.app')
 @section('title','My Plans')
 @section('content')
-  {{-- <h2>Assigned Workout</h2>
-  <ul>
-    @forelse($workouts as $w)
-      <li>{{ $w->workout->name ?? 'Deleted Workout' }} — {{ $w->progress_notes ?? 'No notes' }}</li>
-    @empty
-      <li>No workout assigned yet.</li>
-    @endforelse
-  </ul>
-
-  <h2>Assigned Diet</h2>
-  <ul>
-    @forelse($diets as $d)
-      <li>{{ $d->dietPlan->title ?? 'Deleted Plan' }} — {{ $d->notes ?? 'No notes' }}</li>
-    @empty
-      <li>No diet plan assigned yet.</li>
-    @endforelse
-  </ul> --}}
+  {{-- <h2>Assigned Workout</h2> --}}
 
   <h2>Weekly Plan Overview</h2>
 
@@ -63,30 +47,49 @@
     @endif
 
     {{-- WEEKLY VIEW --}}
-    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;">
-      @foreach($weekdays as $dayNum => $dayLabel)
-        <div style="border: 1px solid #444; padding: 10px;">
-          <h4>{{ $dayLabel }}</h4>
+    @foreach($weekdays as $dayNum => $dayLabel)
+      <div style="border: 1px solid #444; padding: 15px; margin-bottom: 10px; border-radius: 8px; background: #222;">
+        <h3>{{ $dayLabel }}</h3>
+
+        {{-- Workout --}}
+        @php $w = $plans['workouts'][$dayNum] ?? null; @endphp
+        <div>
           <strong>Workout:</strong><br>
-          @php
-            $w = $plans['workouts'][$dayNum] ?? null;
-          @endphp
           @if($w)
-            <p>{{ $w->workout->name ?? 'Deleted' }}</p>
+            <p>Name: {{ $w->workout->name ?? 'Deleted' }}</p>
+            <p>Reps x Sets: {{ $w->workout->reps }} x {{ $w->workout->sets }}</p>
+            <p>Level: {{ ucfirst($w->workout->difficulty_level) }}</p>
+            <p>Note: {{ $w->progress_notes ?? 'No notes' }}</p>
+            <form method="POST" action="/myplan/mark-done/workout">
+              @csrf
+              <input type="hidden" name="day_of_week" value="{{ $dayNum }}">
+              <button>✔️ Mark Workout Done</button>
+            </form>
           @else
             <p><em>No workout</em></p>
           @endif
+        </div>
 
-          <strong>Diet:</strong><br>
-          @php
-            $d = $plans['diets'][$dayNum] ?? null;
-          @endphp
+        {{-- Diet --}}
+        @php $d = $plans['diets'][$dayNum] ?? null; @endphp
+        <div>
+          <strong>Diet Plan:</strong><br>
           @if($d)
-            <p>{{ $d->dietPlan->title ?? 'Deleted' }}</p>
+            <p>Title: {{ $d->dietPlan->title ?? 'Deleted' }}</p>
+            <p>Calories: {{ $d->dietPlan->daily_calories }} kcal</p>
+            <p>Meals/day: {{ $d->dietPlan->meals_per_day }}</p>
+            <p>Duration: {{ $d->dietPlan->duration_weeks }} week(s)</p>
+            <p>Note: {{ $d->notes ?? 'No notes' }}</p>
+            <form method="POST" action="/myplan/mark-done/diet">
+              @csrf
+              <input type="hidden" name="day_of_week" value="{{ $dayNum }}">
+              <button>✔️ Mark Diet Done</button>
+            </form>
           @else
             <p><em>No diet</em></p>
           @endif
         </div>
-      @endforeach
-    </div>
+      </div>
+    @endforeach
+
 @endsection

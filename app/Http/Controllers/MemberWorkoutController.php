@@ -24,14 +24,22 @@ class MemberWorkoutController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'workout_id' => 'required|exists:workouts,id',
+            'day_of_week' => 'required|integer|between:1,7',
             'progress_notes' => 'nullable|string|max:500'
         ]);
 
-        MemberWorkout::create([
-            'user_id' => $request->user_id,
-            'workout_id' => $request->workout_id,
-            'progress_notes' => $request->progress_notes
-        ]);
+
+        MemberWorkout::updateOrCreate(
+            [
+                'user_id' => $request->user_id, 
+                'day_of_week' => $request->day_of_week
+            ],
+            [
+                'workout_id' => $request->workout_id,
+                'progress_notes' => $request->progress_notes,
+                'assigned_by' => auth()->id()
+            ]
+        );
 
         return redirect('/assign-workout')->with('success', 'Workout assigned successfully!');
     }

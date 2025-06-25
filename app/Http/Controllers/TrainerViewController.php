@@ -90,8 +90,21 @@ class TrainerViewController extends Controller
 
     public function unselectTrainer()
     {
-        auth()->user()->update(['trainer_id' => null]);
-        return back()->with('success', 'Trainer removed successfully.');
+        $user = auth()->user();
+
+        // Remove trainer
+        $user->update(['trainer_id' => null]);
+
+        // Delete all trainer-assigned plans (workouts + diets)
+        MemberWorkout::where('user_id', $user->id)
+            ->whereNotNull('assigned_by')
+            ->delete();
+            
+        MemberDiet::where('user_id', $user->id)
+            ->whereNotNull('assigned_by')
+            ->delete();
+
+        return back()->with('success', 'Trainer removed and assigned plans cleared.');
     }
 
 
@@ -187,5 +200,25 @@ class TrainerViewController extends Controller
 
         return back()->with('success', 'Weekly plan auto-generated!');
     }
+
+
+    public function markWorkoutDone(Request $r) 
+    {
+        MemberWorkout::where('user_id', auth()->id())
+            ->where('day_of_week', $r->day_of_week)
+            ->delete();
+
+        return back()->with('success', 'Workout marked as done.');
+    }
+
+    public function markDietDone(Request $r) 
+    {
+        MemberDiet::where('user_id', auth()->id())
+            ->where('day_of_week', $r->day_of_week)
+            ->delete();
+
+        return back()->with('success', 'Diet marked as done.');
+    }
+
 
 }
