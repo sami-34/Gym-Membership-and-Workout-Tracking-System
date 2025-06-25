@@ -9,5 +9,6 @@
     <br>
     <button type="submit">Login</button>
     <a href="/register">Register an account</a>
+    <a href="{{ route('password.request') }}" style="color:#ccc;">Forgot your password?</a>
   </form>
 @endsection

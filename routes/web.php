@@ -2,9 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return redirect('/login');
-// });
+use Illuminate\Support\Facades\Password;
+
 
 use App\Http\Controllers\LandingController;
 
@@ -23,9 +22,6 @@ Route::controller(AuthController::class)->group(function() {
     Route::post('/logout', 'logout')->middleware('auth');
 });
 
-
-
-
 // Protected Routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -34,6 +30,24 @@ Route::middleware('auth')->group(function () {
         if ($role == 'trainer') return view('dashboards.trainer');
         return view('dashboards.member');
     });
+});
+
+
+
+use App\Http\Controllers\Auth\ForgotPasswordController;
+
+// Password Reset Routes
+Route::controller(ForgotPasswordController::class)->group(function(){
+    Route::get('forgot-password', 'showLinkRequestForm')->name('password.request');
+    Route::post('forgot-password', 'sendResetLinkEmail')->name('password.email');
+});
+
+
+use App\Http\Controllers\Auth\ResetPasswordController;
+
+Route::controller(ResetPasswordController::class)->group(function(){
+    Route::get('reset-password/{token}', 'showResetForm')->name('password.reset');
+    Route::post('reset-password', 'reset')->name('password.update');
 });
 
 
