@@ -12,7 +12,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
-    public function attendanceReport() {
+    public function attendanceReport() 
+    {
         $today = now()->toDateString();
         $present = Attendance::where('date', $today)->pluck('user_id')->toArray();
         $allMembers = User::where('role', 'member')->get();
@@ -20,17 +21,23 @@ class AdminController extends Controller
         return view('admin.attendance', compact('present', 'allMembers'));
     }
 
-    public function manageTrainers(){
+
+    public function manageTrainers()
+    {
         $trainers = User::where('role','trainer')->with('trainerProfile')->get();
         return view('admin.trainers.index', compact('trainers'));
     }
 
-    public function editTrainer($id) {
+
+    public function editTrainer($id) 
+    {
         $trainer = User::where('role','trainer')->with('trainerProfile')->findOrFail($id);
         return view('admin.trainers.edit', compact('trainer'));
     }
 
-    public function updateTrainer(Request $request, $id) {
+
+    public function updateTrainer(Request $request, $id) 
+    {
         $request->validate([
             'price_per_month' => 'required|numeric|min:0',
             'rating' => 'nullable|numeric|min:0|max:5',
@@ -49,7 +56,9 @@ class AdminController extends Controller
         return redirect('/admin/manageTrainers')->with('success', 'Trainer updated successfully.');
     }
 
-    public function deleteTrainer($id) {
+
+    public function deleteTrainer($id) 
+    {
         $trainer = User::where('role', 'trainer')->findOrFail($id);
 
         // Detach members who selected this trainer
@@ -62,7 +71,9 @@ class AdminController extends Controller
         return redirect('/admin/manageTrainers')->with('success', 'Trainer deleted successfully.');
     }
 
-    public function reportForm() {
+
+    public function reportForm() 
+    {
         $planNames = Membership::select('plan_name')->distinct()->pluck('plan_name');
         if ($planNames->isEmpty()) {
             $planNames = collect(['Monthly Plan', 'Yearly Plan', '6-Month Plan']);
@@ -70,23 +81,9 @@ class AdminController extends Controller
         return view('admin.reports.form', compact('planNames'));
     }
 
-    /*
-        *ALGORITHM USED: Custom sorting algorithm (Bubble Sort) to simulates a comparison-based sorting algorithm like Bubble Sort or Merge Sort.  
-    */
-    private function bubbleSortTrainers(array $trainers){
-        for ($i = 0; $i < count($trainers) - 1; $i++) {
-            for ($j = 0; $j < count($trainers) - $i - 1; $j++) {
-                if ($trainers[$j]['members_count'] < $trainers[$j + 1]['members_count']) {
-                    $temp = $trainers[$j];
-                    $trainers[$j] = $trainers[$j + 1];
-                    $trainers[$j + 1] = $temp;
-                }
-            }
-        }
-        return $trainers;
-    }
 
-    public function generateReport(Request $request) {
+    public function generateReport(Request $request) 
+    {
         $request->validate([
             'report_type' => 'required',
             'start_date'  => 'required|date',
@@ -105,15 +102,16 @@ class AdminController extends Controller
             ->sum('amount');
 
         $growth = Membership::whereBetween('start_date', [$request->start_date, $request->end_date])->count();
+        
         $trainerPerformance = [];
 
-        if ($request->trainer_performance == 'on') {
-            $allTrainers = User::where('role', 'trainer')->withCount('members')->get()->toArray();
-
-            // - Custom Sorting Algorithm:
-            $allTrainers = $this->bubbleSortTrainers($allTrainers);
-
-            $trainerPerformance = collect($allTrainers); // Convert back to collection
+        if ($request->trainer_performance == 'on') 
+        {
+            // Now using Eloquent to sort by members_count DESC directly
+            $trainerPerformance = User::where('role', 'trainer')
+                ->withCount('members')
+                ->orderByDesc('members_count')
+                ->get();
         }
 
         return view('admin.reports.result', compact(
@@ -134,15 +132,16 @@ class AdminController extends Controller
             ->sum('amount');
 
         $growth = Membership::whereBetween('start_date', [$request->start_date, $request->end_date])->count();
+        
         $trainerPerformance = [];
 
-        if ($request->trainer_performance == 'on') {
-            $allTrainers = User::where('role', 'trainer')->withCount('members')->get()->toArray();
-
-            // - Custom Sorting Algorithm:
-            $allTrainers = $this->bubbleSortTrainers($allTrainers);
-
-            $trainerPerformance = collect($allTrainers); // Convert back to collection
+        if ($request->trainer_performance == 'on') 
+        {
+            // Now using Eloquent to sort by members_count DESC directly
+            $trainerPerformance = User::where('role', 'trainer')
+                ->withCount('members')
+                ->orderByDesc('members_count')
+                ->get();
         }
 
 

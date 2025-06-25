@@ -11,26 +11,19 @@ use App\Models\MemberDiet;
 
 class TrainerViewController extends Controller
 {
-    public function index(Request $request) {
-        // $query = User::where('role', 'trainer')->with('trainerProfile');
-
-        // // Filter by rating (if provided)
-        // if ($request->filled('rating')) {
-        //     $query->whereHas('trainerProfile', function ($q) use ($request) {
-        //         $q->where('rating', '>=', $request->rating);
-        //     });
-        // }
-
-        // // Filter by price (if provided)
-        // if ($request->filled('price')) {
-        //     $query->whereHas('trainerProfile', function ($q) use ($request) {
-        //         $q->where('price_per_month', '<=', $request->price);
-        //     });
-        // }
-
-        // $trainers = $query->get();
-         // 🔎 Custom linear search to filter trainers
-        $trainers = $this->linearSearchTrainers($request);
+    public function index(Request $request) 
+    {
+        $trainers = User::where('role', 'trainer')
+        ->whereHas('trainerProfile', function ($q) use ($request) {
+            if ($request->filled('rating')) {
+                $q->where('rating', '>=', $request->rating);
+            }
+            if ($request->filled('price')) {
+                $q->where('price_per_month', '<=', $request->price);
+            }
+        })
+        ->with('trainerProfile')
+        ->get();
 
         // Get current selected trainer (for rating UI)
         $currentTrainer = null;
@@ -45,44 +38,16 @@ class TrainerViewController extends Controller
         ]);
     }
 
-    /*
-        *ALGORITHM USED: Linear Search to filter trainers by rating and/or price.  
-    */
-    private function linearSearchTrainers(Request $request)
+
+    public function selectTrainer(Request $r) 
     {
-        $all = User::where('role', 'trainer')->with('trainerProfile')->get();
-
-        $filtered = [];
-
-        foreach ($all as $trainer) {
-            $profile = $trainer->trainerProfile;
-
-            if (!$profile) continue;
-
-            // Check rating condition
-            if ($request->filled('rating') && $profile->rating < $request->rating) {
-                continue;
-            }
-
-            // Check price condition
-            if ($request->filled('price') && $profile->price_per_month > $request->price) {
-                continue;
-            }
-
-            // Passed all checks
-            $filtered[] = $trainer;
-        }
-        return collect($filtered);
-    }
-
-
-    public function selectTrainer(Request $r) {
         auth()->user()->update(['trainer_id'=>$r->trainer_id]);
         return back()->with('success','Trainer selected!');
     }
 
 
-    public function rateTrainer(Request $r) {
+    public function rateTrainer(Request $r) 
+    {
         $tp = TrainerProfile::where('user_id', auth()->user()->trainer_id)->first();
         $tp->rating = ($tp->rating + $r->rating)/2;
         $tp->save();
