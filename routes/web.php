@@ -81,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/myplan', [TrainerViewController::class, 'myPlan']);
     Route::get('/trainers/recommended', [TrainerViewController::class,'recommended']);
     Route::post('/trainers/unselect', [TrainerViewController::class, 'unselectTrainer']);
+    Route::post('/myplan/addplan', [TrainerViewController::class, 'addManualPlan']);
+    Route::post('/myplan/autogenerate', [TrainerViewController::class, 'autoGeneratePlan']);
 });
 
 

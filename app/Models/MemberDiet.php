@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MemberDiet extends Model
 {
-    protected $fillable = ['user_id', 'diet_plan_id', 'notes'];
+    protected $fillable = ['user_id', 'diet_plan_id', 'notes', 'day_of_week'];
 
     public function user() {
         return $this->belongsTo(User::class);
