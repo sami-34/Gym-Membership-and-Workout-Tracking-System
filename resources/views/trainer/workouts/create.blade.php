@@ -16,27 +16,27 @@
   <form method="POST" action="/workouts">
     @csrf
     <label>Name:</label>
-    <input name="name" required>
+    <input name="name" required><br>
 
     <label>Reps:</label>
     <select name="reps">
       <option>12</option><option>10</option><option>8</option>
-    </select>
+    </select><br>
 
     <label>Sets:</label>
     <select name="sets">
       <option>3</option><option>2</option><option>1</option>
-    </select>
+    </select><br>
 
-    <label>Description:</label>
-    <textarea name="description" required></textarea>
+    <label>Description:</label><br>
+    <textarea name="description" required class="notes-textarea"></textarea><br>
 
     <label>Difficulty:</label>
     <select name="difficulty_level" required>
       <option value="beginner">Beginner</option>
       <option value="intermediate">Intermediate</option>
       <option value="advanced">Advanced</option>
-    </select>
+    </select><br>
 
     <button type="submit">Create</button>
   </form>

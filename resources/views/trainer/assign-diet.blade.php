@@ -3,29 +3,6 @@
 @section('content')
   <h2>Assign Diet Plan to Member</h2>
 
-  {{-- <form method="POST" action="/assign-diet">
-    @csrf
-
-    <label>Member</label>
-    <select name="user_id" required>
-      @foreach($members as $m)
-        <option value="{{ $m->id }}">{{ $m->name }}</option>
-      @endforeach
-    </select>
-
-    <label>Diet Plan</label>
-    <select name="diet_plan_id" required>
-      @foreach($diets as $d)
-        <option value="{{ $d->id }}">{{ $d->title }}</option>
-      @endforeach
-    </select>
-
-    <label>Notes (optional)</label>
-    <textarea name="notes" rows="3" placeholder="e.g., Follow for 1 month..."></textarea>
-
-    <button type="submit">Assign</button>
-  </form> --}}
-
   <form method="POST" action="/assign-diet">
   @csrf
 
@@ -34,7 +11,7 @@
     @foreach($members as $m)
       <option value="{{ $m->id }}">{{ $m->name }}</option>
     @endforeach
-  </select>
+  </select><br>
 
   <label>Diet Plan:</label>
   <select name="diet_plan_id" required>
@@ -43,7 +20,7 @@
         {{ $d->title }} ({{ $d->duration_weeks }} wk, {{ $d->calories }} kcal, {{ $d->meals_per_day }} meals/day)
       </option>
     @endforeach
-  </select>
+  </select><br>
 
   <label>Day of Week:</label>
   <select name="day_of_week" required>
@@ -54,10 +31,10 @@
     <option value="5">Fri</option>
     <option value="6">Sat</option>
     <option value="7">Sun</option>
-  </select>
+  </select><br>
 
-  <label>Notes (optional):</label>
-  <textarea name="notes"></textarea>
+  <label>Notes (optional):</label><br>
+  <textarea name="notes" class="notes-textarea"></textarea><br>
 
   <button type="submit">Assign Diet</button>
 </form>

@@ -6,10 +6,13 @@
       @forelse($scored as $data)
         <div class="trainer-card">
           <h3>{{ $data['trainer']->name }}</h3>
-          <p>Desc: {{ $data['trainer']->trainerProfile->description ?? 'No description.' }}</p>
-          <p>Rating: {{ $data['trainer']->trainerProfile->rating ?? 0 }} ⭐</p>
-          <p>Members: {{ $data['trainer']->members->count() }} </p>
-          <p>Price Per Month: Rs.{{ $data['trainer']->trainerProfile->price_per_month ?? 'N/A' }}</p>
+          <p><strong>Rating:</strong> {{ $data['trainer']->trainerProfile->rating ?? 0 }} ⭐</p>
+          <p><strong>Members:</strong> {{ $data['trainer']->members->count() }} </p>
+          <p><strong>Price Per Month:</strong> Rs.{{ $data['trainer']->trainerProfile->price_per_month ?? 'N/A' }}</p>
+          <p><strong>Experience:</strong> {{ $data['trainer']->trainerProfile->experience_years }} years</p>
+          <p><strong>Specialization:</strong> {{ ucfirst($data['trainer']->trainerProfile->specialization) }}</p>
+          <p><strong>Workout Types:</strong> {{ $data['trainer']->trainerProfile->workout_types }}</p>
+          <p> {{ $data['trainer']->trainerProfile->description ?? 'No description.' }}</p>
           
           <p><strong>Score:</strong> <span class="score">{{ $data['score'] }}</span></p>
           @if($currentTrainer && $currentTrainer->id == $data['trainer']->id)

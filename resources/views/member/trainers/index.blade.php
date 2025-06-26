@@ -19,12 +19,15 @@
       @foreach($trainers as $t)
         <div class="trainer-card">
           <h3>{{ $t->name }}</h3>
+          <p><strong>Rating:</strong> {{ number_format($t->trainerProfile->rating, 2) }} ⭐</p>
+          <p><strong>Price Per Month:</strong> Rs.{{ $t->trainerProfile->price_per_month }}</p>
+          <p><strong>Experience:</strong> {{ $t->trainerProfile->experience_years }} years</p>
+          <p><strong>Specialization:</strong> {{ ucfirst($t->trainerProfile->specialization) }}</p>
+          <p><strong>Workout Types:</strong> {{ $t->trainerProfile->workout_types }}</p>
           <p>{{ $t->trainerProfile->description ?? 'No description.' }}</p>
-          <p>Rating: {{ number_format($t->trainerProfile->rating, 2) }} ⭐</p>
-          <p>Price Per Month: Rs.{{ $t->trainerProfile->price_per_month }}</p>
-          @if(isset($t->score))
+          {{-- @if(isset($t->score))
             <p><strong>Score:</strong> <span class="score">{{ number_format($t->score, 2) }}</span></p>
-          @endif
+          @endif --}}
 
           @if($current && $current->id == $t->id)
             <p class="current-badge">✔️ Selected Trainer</p>

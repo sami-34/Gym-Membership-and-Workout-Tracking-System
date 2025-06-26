@@ -15,6 +15,9 @@
         <p>{{ $trainer->name }}</p>
         <p>Price Per Month: Rs. {{ $trainer->trainerProfile->price_per_month ?? 'N/A' }}</p>
         <p>Rating: {{ $trainer->trainerProfile->rating ?? 'N/A' }} ⭐</p>
+        <p>Experience: {{ $trainer->trainerProfile->experience_years }} years</p>
+        <p>Specialization: {{ ucfirst($trainer->trainerProfile->specialization) }}</p>
+        <p>Workout Types: {{ $trainer->trainerProfile->workout_types }}</p>
       @else
         <p><a href="/trainers">Choose a Trainer</a></p>
       @endif

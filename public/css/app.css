@@ -101,6 +101,14 @@ th {
     border-radius: 4px;
     margin-bottom: 1rem;
 }
+/* for notes */
+.notes-textarea {
+    width: 20%;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    resize: vertical; /* Allows vertical resizing only */
+}
 
 /* for trainer card(member.trainers.index) */
 .trainer-card-container {

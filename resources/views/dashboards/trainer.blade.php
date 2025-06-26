@@ -10,7 +10,9 @@
     </div>
     <div class="card">
       <h3>Weekly Selections</h3>
-      <canvas id="selChart"></canvas>
+      <div style="max-width: 700px; ">
+        <canvas id="selChart"></canvas>
+      </div>
     </div>
   </div>
 
