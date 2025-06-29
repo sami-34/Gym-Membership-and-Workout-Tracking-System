@@ -17,6 +17,9 @@ return new class extends Migration
             $table->decimal('price_per_month', 8, 2);
             $table->float('rating')->default(0);
             $table->text('description');
+            $table->integer('experience_years')->default(0);
+            $table->string('specialization')->nullable();
+            $table->string('workout_types')->nullable();
             $table->timestamps();
         });
     }

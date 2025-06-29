@@ -22,7 +22,7 @@
         <td>
           <a href="/memberships/{{ $m->id }}/edit">Edit</a> |
           <a href="/memberships/{{ $m->id }}/delete">
-            <button onclick="return confirm('Are you sure?')" style="color:red;">Delete</button>
+            <button onclick="return confirm('Are you sure?')" style="color:red;">Deactivate</button>
           </a>
         </td>
       </tr>

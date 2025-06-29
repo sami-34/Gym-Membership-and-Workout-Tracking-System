@@ -10,7 +10,7 @@
 
   <div class="card">
     <h3>Membership Growth</h3>
-    <canvas id="growthChart"></canvas>
+    <canvas id="growthChart"  width="500" height="300"></canvas>
   </div>
 
   <div class="card">
@@ -28,6 +28,7 @@
     </table>
   </div>
 
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     new Chart(document.getElementById('growthChart'), {

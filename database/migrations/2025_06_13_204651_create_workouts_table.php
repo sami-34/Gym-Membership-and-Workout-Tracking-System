@@ -15,6 +15,8 @@ return new class extends Migration
              $table->id();
             $table->foreignId('trainer_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
+            $table->integer('reps')->nullable();
+            $table->integer('sets')->nullable();
             $table->text('description');
             $table->enum('difficulty_level', ['beginner', 'intermediate', 'advanced']);
             $table->timestamps();

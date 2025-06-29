@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('member_diets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('assigned_by')->nullable();
             $table->foreignId('diet_plan_id')->constrained()->onDelete('cascade');
+            $table->tinyInteger('day_of_week')->nullable();
+
             $table->text('notes')->nullable();
             $table->timestamps();
         });

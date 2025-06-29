@@ -14,7 +14,7 @@
       <option value="trainer">Trainer</option>
     </select>
     <br>
-    <button type="submit">Register</button>
+    <button type="submit">Register</button><br>
     <a href="/login">Already have an account? Login</a>
   </form>
   

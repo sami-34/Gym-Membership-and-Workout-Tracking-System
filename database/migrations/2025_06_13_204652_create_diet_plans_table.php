@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('trainer_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
+            $table->integer('duration_weeks')->nullable();
+            $table->integer('calories')->nullable();
+            $table->integer('meals_per_day')->nullable();
             $table->timestamps();
         });
     }
