@@ -34,11 +34,6 @@ class TrainerProfileController extends Controller
             'workout_types' => 'required|string',
         ]);
 
-        // $profile = TrainerProfile::where('user_id', Auth::id())->first();
-        // $profile->update($request->only('price_per_month', 'description'));
-
-        // return redirect()->back()->with('success', 'Profile updated!');
-
         $user = Auth::user();
         $user->name = $request->name;
         $user->save();

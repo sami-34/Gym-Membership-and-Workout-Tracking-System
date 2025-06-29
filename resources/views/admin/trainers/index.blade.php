@@ -3,10 +3,6 @@
 @section('content')
   <h2>Trainers</h2>
 
-  @if(session('success'))
-    <p style="color:green">{{ session('success') }}</p>
-  @endif
-
   <table border="1" cellpadding="8">
     <tr>
       <th>Name</th>

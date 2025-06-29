@@ -4,12 +4,6 @@
   <meta charset="UTF-8">
   <title>@yield('title') — Gym Tracker</title>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  {{-- <script>
-    function toggleMenu() {
-      const nav = document.querySelector('nav.sidebar');
-      nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-    }
-  </script> --}}
 </head>
 <body>
   <header>
@@ -58,6 +52,21 @@
     @if(session('success'))
       <div class="flash">{{ session('success') }}</div>
     @endif
+
+    @if(session('error'))
+      <div class="flash error">{{ session('error') }}</div>
+    @endif
+
+    @if ($errors->any())
+      <div class="flash error">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
     @yield('content')
   </main>
   <script>
