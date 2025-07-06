@@ -2,7 +2,7 @@
 @section('title','Recommended Trainers')
 @section('content')
 <h2>Recommended Trainers</h2>
-    <div class="trainer-card-containers">
+    <div class="trainer-card-container">
       @forelse($scored as $data)
         <div class="trainer-card">
           <h3>{{ $data['trainer']->name }}</h3>

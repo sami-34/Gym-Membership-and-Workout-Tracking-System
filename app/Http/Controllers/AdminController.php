@@ -93,6 +93,7 @@ class AdminController extends Controller
             'trainer_performance' => 'nullable'
         ]);
 
+        // Summary stats
         $activeMembers = Membership::whereBetween('start_date', [$request->start_date, $request->end_date])
             ->when($request->membership_type, fn($q) => $q->where('plan_name', $request->membership_type))
             ->count();
@@ -103,6 +104,7 @@ class AdminController extends Controller
 
         $growth = Membership::whereBetween('start_date', [$request->start_date, $request->end_date])->count();
         
+        // Trainer performance (optional)
         $trainerPerformance = [];
 
         if ($request->trainer_performance == 'on') 
@@ -114,8 +116,25 @@ class AdminController extends Controller
                 ->get();
         }
 
+        // Detailed report data (only when requested)
+        $detailedMembers = collect();
+        $paymentDetails = collect();
+
+        if ($request->report_type === 'detailed') {
+            $detailedMembers = Membership::with('user')
+                ->whereBetween('start_date', [$request->start_date, $request->end_date])
+                ->when($request->membership_type, fn($q) => $q->where('plan_name', $request->membership_type))
+                ->get();
+
+            $paymentDetails = Payment::with('user')
+                ->whereBetween('payment_date', [$request->start_date, $request->end_date])
+                ->when($request->payment_status, fn($q) => $q->where('status', $request->payment_status))
+                ->get();
+        }
+
         return view('admin.reports.result', compact(
-            'activeMembers', 'revenue', 'growth', 'trainerPerformance', 'request'
+            'activeMembers', 'revenue', 'growth', 'trainerPerformance',
+            'request', 'detailedMembers', 'paymentDetails'
         ));
     }
 
@@ -144,12 +163,29 @@ class AdminController extends Controller
                 ->get();
         }
 
+        
+        $detailedMembers = collect();
+        $paymentDetails = collect();
+
+        if ($request->report_type === 'detailed') {
+            $detailedMembers = Membership::with('user')
+                ->whereBetween('start_date', [$request->start_date, $request->end_date])
+                ->when($request->membership_type, fn($q) => $q->where('plan_name', $request->membership_type))
+                ->get();
+
+            $paymentDetails = Payment::with('user')
+                ->whereBetween('payment_date', [$request->start_date, $request->end_date])
+                ->when($request->payment_status, fn($q) => $q->where('status', $request->payment_status))
+                ->get();
+        }
 
         $pdf = Pdf::loadView('admin.reports.pdf', [
             'activeMembers' => $activeMembers,
             'revenue' => $revenue,
             'growth' => $growth,
             'trainerPerformance' => $trainerPerformance,
+            'detailedMembers' => $detailedMembers,
+            'paymentDetails' => $paymentDetails,
             'request' => $request
         ]);
 

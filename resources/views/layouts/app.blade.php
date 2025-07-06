@@ -20,29 +20,30 @@
       <button class="close-btn" onclick="toggleMenu()">✖</button>
       <ul>
         {{-- DASHBOARD (one link only) --}}
-        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/dashboard">🏠Dashboard</a></li>
 
         {{-- ROLE-SPECIFIC NAVIGATION --}}
         @if(auth()->user()->role == 'admin')
-          <li><a href="/admin/attendance">Attendance Report</a></li>
-          <li><a href="/memberships">Manage Memberships</a></li>
-          <li><a href="/admin/manageTrainers">Manage Trainers</a></li>
-          <li><a href="/payments">Payments</a></li>
-          <li><a href="/admin/reports">Reports</a></li>
+          <li><a href="/admin/attendance">📝Attendance Report</a></li>
+          <li><a href="{{ route('admin.members') }}">👤 Member Progress</a></li>
+          <li><a href="/memberships">🎫Manage Memberships</a></li>
+          <li><a href="/admin/manageTrainers">🧑‍🔧Manage Trainers</a></li>
+          <li><a href="/payments">💳Payments</a></li>
+          <li><a href="/admin/reports">📄Reports</a></li>
 
         @elseif(auth()->user()->role == 'trainer')
-          <li><a href="/trainer/profile">My Profile</a></li>
-          <li><a href="/workouts">Workouts</a></li>
-          <li><a href="/diets">Diet Plans</a></li>
-          <li><a href="/assign-workout">Assign Workout</a></li>
-          <li><a href="/assign-diet">Assign Diet</a></li>
+          <li><a href="/trainer/profile">👤My Profile</a></li>
+          <li><a href="/workouts">🏋️Workouts</a></li>
+          <li><a href="/diets">🍎Diet Plans</a></li>
+          <li><a href="/assign-workout">📤Assign Workout</a></li>
+          <li><a href="/assign-diet">🍽️Assign Diet</a></li>
 
         @elseif(auth()->user()->role == 'member')
-          <li><a href="/attendance/checkin">Check‑In</a></li>
-          <li><a href="/progress">My Progress</a></li>
-          <li><a href="/trainers">Choose Trainer</a></li>
-          <li><a href="/trainers/recommended">Recommended Trainer</a></li>
-          <li><a href="/myplan">My Plans</a></li>
+          <li><a href="/attendance/checkin">✅Check‑In</a></li>
+          <li><a href="/progress">📈My Progress</a></li>
+          <li><a href="/trainers">🧑‍🏫Choose Trainer</a></li>
+          <li><a href="/trainers/recommended">🌟Recommended Trainer</a></li>
+          <li><a href="/myplan">🗓️My Plans</a></li>
         @endif
       </ul>
     </nav>

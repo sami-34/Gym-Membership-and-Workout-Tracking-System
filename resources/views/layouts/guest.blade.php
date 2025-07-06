@@ -7,7 +7,7 @@
 </head>
 <body style="background:#1e1e1e; color:#ddd; padding: 4rem; text-align: center;">
 
-  <h1>Gym Tracker</h1>
+  <h1><a href="{{route('landing')}}">Gym Tracker</a></h1>
 
   <div style="max-width: 400px; margin: auto; text-align: left;">
     @if(session('success'))
@@ -27,7 +27,7 @@
         </ul>
       </div>
     @endif
-    
+
     @yield('content')
   </div>
 

@@ -36,6 +36,36 @@
     </table>
   @endif
 
+  @if($request->report_type === 'detailed')
+    <hr>
+    <h3>Detailed Membership Records</h3>
+    <table>
+      <tr><th>Member</th><th>Plan</th><th>Start Date</th><th>End Date</th></tr>
+      @foreach($detailedMembers as $m)
+        <tr>
+          <td>{{ $m->user->name ?? 'N/A' }}</td>
+          <td>{{ $m->plan_name }}</td>
+          <td>{{ $m->start_date }}</td>
+          <td>{{ $m->end_date }}</td>
+        </tr>
+      @endforeach
+    </table>
+
+    <h3>Payment Records</h3>
+    <table>
+      <tr><th>Member</th><th>Amount</th><th>Status</th><th>Date</th></tr>
+      @foreach($paymentDetails as $p)
+        <tr>
+          <td>{{ $p->user->name ?? 'N/A' }}</td>
+          <td>Rs. {{ $p->amount }}</td>
+          <td>{{ ucfirst($p->status) }}</td>
+          <td>{{ $p->payment_date }}</td>
+        </tr>
+      @endforeach
+    </table>
+  @endif
+
+
   <br>
   <form method="POST" action="{{ route('export.pdf') }}">
     @csrf

@@ -43,7 +43,10 @@ class TrainerViewController extends Controller
 
     public function recommended()
     {
-        $trainers = User::where('role', 'trainer')->with('trainerProfile', 'members')->get();
+        $trainers = User::where('role', 'trainer')
+        ->with('trainerProfile')
+        ->withCount('members')
+        ->get();
 
         // Calculate recommendation score
         $scored = $this->recomScore($trainers);
@@ -56,30 +59,46 @@ class TrainerViewController extends Controller
         return view('member.trainers.recommended', compact('scored','currentTrainer'));
     }
 
+
     /*
-        Custom algo to calculate recommendation score: (rating * member_count) / price
+        Normalized Scoring Algorithm
+        - Factors: rating, member count, and price
+        - Weighted sum: higher rating & member count = better, lower price = better
     */
     public function recomScore($trainers)
     {
-        return $trainers->map(function ($trainer) {
-            $rating = $trainer->trainerProfile->rating ?? 0;
-            $price = $trainer->trainerProfile->price_per_month ?? 1;
-            $memberCount = $trainer->members->count();
+        $minPrice = $trainers->min(fn($t) => $t->trainerProfile->price_per_month ?? 0);
+        $maxPrice = $trainers->max(fn($t) => $t->trainerProfile->price_per_month ?? 1);
 
-            $ratingWeight = 130;
-            $memberWeight = 170;
+        $maxRating = 5;
+        $maxMembers = $trainers->max('members_count') ?: 1;
 
-            $score = ($rating * $ratingWeight + $memberCount * $memberWeight) / max($price, 1);
-            // $score = ($rating * ($memberCount + 1)) / max($price, 1);
+        $weights = [
+            'rating' => 0.4,
+            'members' => 0.4,
+            'price' => 0.2
+        ];
+
+        return $trainers->map(function ($t) use ($weights, $minPrice, $maxPrice, $maxMembers, $maxRating) {
+            $rating = $t->trainerProfile->rating ?? 0;
+            $members = $t->members_count;
+            $price = $t->trainerProfile->price_per_month ?? $minPrice;
+
+            $normalizedRating = $rating / $maxRating;
+            $normalizedMembers = $members / $maxMembers;
+            $normalizedPrice = 1 - (($price - $minPrice) / max(($maxPrice - $minPrice), 1));
+
+            $score = $weights['rating'] * $normalizedRating
+                + $weights['members'] * $normalizedMembers
+                + $weights['price'] * $normalizedPrice;
 
             return [
-                'trainer' => $trainer,
-                'score' => round($score, 4),
+                'trainer' => $t,
+                'score' => round($score, 4)
             ];
-        })->sortByDesc('score')
-            ->values()  // Reset keys
-            ->take(3); ; // LIMIT TO TOP 3
+        })->sortByDesc('score')->values()->take(3);
     }
+
 
 
     public function selectTrainer(Request $r) 
@@ -119,10 +138,6 @@ class TrainerViewController extends Controller
 
     public function myPlan()
     {
-        // $workouts = MemberWorkout::where('user_id', auth()->id())->with('workout')->get();
-        // $diets    = MemberDiet::where('user_id', auth()->id())->with('dietPlan')->get();
-
-        // return view('member.myplan', compact('workouts', 'diets'));
         $userId = auth()->id();
         $trainerId = auth()->user()->trainer_id;
 

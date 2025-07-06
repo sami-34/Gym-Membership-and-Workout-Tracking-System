@@ -193,3 +193,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/reports/export', [AdminController::class, 'exportPDF'])->name('export.pdf');
 
 });
+
+use App\Http\Controllers\AdminProgressController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/members', [AdminProgressController::class, 'members'])->name('admin.members');
+    Route::get('/admin/progress/{user}', [AdminProgressController::class, 'view'])->name('admin.progress.view');
+});
+

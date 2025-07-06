@@ -28,7 +28,6 @@ class TrainerProfileController extends Controller
             'name' => 'required|string|max:255',
             'price_per_month' => 'required|numeric|min:0',
             'description' => 'required|string|max:1000',
-            // 'rating' => 'required|integer|min:1|max:5',
             'experience_years' => 'required|integer|min:0',
             'specialization' => 'required|string',
             'workout_types' => 'required|string',

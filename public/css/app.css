@@ -41,14 +41,23 @@ nav.sidebar {
 nav.sidebar ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* Ensures left alignment */
 }
+
 nav.sidebar li {
-    margin: 1rem 0;
-    width: 80%;
-    text-align: center;
+    margin: 0.5rem 0;
+    width: 100%;
+    padding: 0 1rem; /* Add consistent left/right padding */
+}
+
+nav.sidebar li a {
+    display: block;
+    width: 100%;
+    text-align: left; /* Ensures text starts from left */
+    padding: 0.5rem;
 }
 
 .sidebar .close-btn {
@@ -127,13 +136,13 @@ th {
     margin-top: 1rem;
 }
 
-.trainer-card-containers {
+/* .trainer-card-containers {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     gap: 1.5rem;
     margin-top: 1rem;
-}
+} */
 
 .trainer-card {
     background: #2a2a2a;
