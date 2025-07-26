@@ -23,6 +23,19 @@
     @endforeach
   </table>
 
+  @if(count($smoothed))
+    <h2>Smoothed Muscle Trend (3-Day Moving Average)</h2>
+    <table>
+      <tr><th>Date</th><th>Smoothed Muscle Mass (kg)</th></tr>
+      @foreach($smoothed as $entry)
+        <tr>
+          <td>{{ $entry['date'] }}</td>
+          <td>{{ $entry['smoothed_muscle'] }}</td>
+        </tr>
+      @endforeach
+    </table>
+  @endif
+
   @if($latest)
     <div class="card">
       <h3>Body Composition</h3>
